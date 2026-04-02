@@ -5,6 +5,8 @@ class Task {
   int nbhours;
   int difficulty;
   String description;
+  bool connecterSupabase;
+
   Task({
     required this.id,
     required this.title,
@@ -12,8 +14,9 @@ class Task {
     required this.nbhours,
     required this.difficulty,
     required this.description,
+    this.connecterSupabase = false,
   });
-  static int nb=50;
+  static int nb = 50;
 
   static Task fromJson(Map<String, dynamic> json) {
     return Task(
@@ -23,6 +26,7 @@ class Task {
       nbhours: json['nbhours'] ?? 0,
       difficulty: json['difficuty'] ?? 0,
       description: json['description'] ?? '',
+      connecterSupabase: json['connecterSupabase'] ?? false,
     );
   }
 
@@ -30,10 +34,11 @@ class Task {
     return {
       'id': id,
       'title': title,
-      'tags': tags.join(',') ,
+      'tags': tags.join(','),
       'nbhours': nbhours,
       'difficulty': difficulty,
       'description': description,
+      'connecterSupabase': connecterSupabase ? 1 : 0,
     };
   }
 
@@ -45,6 +50,7 @@ class Task {
       nbhours: map['nbhours'] as int,
       difficulty: map['difficulty'] as int,
       description: map['description'] as String,
+      connecterSupabase: (map['connecterSupabase'] as int?) == 1,
     );
   }
 }

@@ -14,36 +14,35 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: "https://twuzlqinrgesqedrishs.supabase.co",
+    anonKey: "sb_publishable_bkA61cg_crZZ51M2bzsMwg_vf5eHR8t",
+  );
   if (kIsWeb) {
-    // Change default factory on the web
     databaseFactory = databaseFactoryFfiWeb;
   } else {
-    // Change default factory for other platforms
     databaseFactory = databaseFactoryFfi;
   }
-
-  final database = openDatabase(
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
-    join(await getDatabasesPath(), 'task.db'),
-    // When the database is first created, create a table to store dogs.
+  final String dbPath = join(await getDatabasesPath(), 'task.db');
+  final Database database = await openDatabase(
+    dbPath,
     onCreate: (db, version) {
-      // Run the CREATE TABLE statement on the database.
       return db.execute(
-        'CREATE TABLE task(id INTEGER PRIMARY KEY, title TEXT, tags TEXT, nbhours INTEGER, difficulty INTEGER, description TEXT)',
+        "CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, nbhours INTEGER, difficulty INTEGER, tags TEXT, connecterSupabase INTEGER DEFAULT 0)",
       );
     },
-    // Set the version. This executes the onCreate function and provides a
-    // path to perform database upgrades and downgrades.
     version: 1,
   );
-  final db = await database;
-  runApp(MyApp(db));
+  runApp(MyApp(database));
 }
+
+// It's handy to then extract the Supabase client in a variable for later uses
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   final Database database;
