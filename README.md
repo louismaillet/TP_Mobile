@@ -15,7 +15,7 @@ flutter run -d chrome --web-port 5000
 ### Copier-coller dans l'éditeur SQL de Supabase
 
 ```sql
-CREATE TABLE task (
+CREATE TABLE tasks (
   id INT PRIMARY KEY,
   title TEXT NOT NULL,
   description TEXT,
@@ -41,7 +41,7 @@ await Supabase.initialize(
 
 # Ce que j'ai fait : 
 
-- Création d'une table `task` dans Supabase avec les champs nécessaires.
+- Création d'une table `tasks` dans Supabase avec les champs nécessaires.
 - Mise en place de l'initialisation de Supabase dans le code Flutter.
 - Création d'une task avec le choix de l'ajouter a supabase ou non.
 - sauvergarde de la task dans une liste localement.

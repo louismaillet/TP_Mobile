@@ -15,7 +15,7 @@ class TaskRepository {
 
     await db.insert('tasks', data);
     if (task.connecterSupabase) {
-      await supabase.from('task').insert({
+      await supabase.from('tasks').insert({
         'title': task.title,
         'description': task.description,
         'tags': task.tags.join(','),
@@ -42,7 +42,7 @@ class TaskRepository {
 
     if (task.connecterSupabase) {
       await supabase
-          .from('task')
+          .from('tasks')
           .update({
             'title': task.title,
             'description': task.description,
@@ -56,6 +56,6 @@ class TaskRepository {
 
   Future<void> deleteTask(int id) async {
     await db.delete('tasks', where: 'id = ?', whereArgs: [id]);
-    await supabase.from('task').delete().eq('id', id);
+    await supabase.from('tasks').delete().eq('id', id);
   }
 }
