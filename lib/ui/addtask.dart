@@ -100,7 +100,7 @@ class _AddTaskState extends State<AddTask> {
 
                 ElevatedButton(
                   
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.saveAndValidate()) {
                       final formData = _formKey.currentState!.value;
                       
@@ -114,7 +114,7 @@ class _AddTaskState extends State<AddTask> {
                           tags: widget.task!.tags,
                         );
                         
-                        context.read<TaskViewModel>().updateTask(widget.task!, updatedTask);
+                        await context.read<TaskViewModel>().updateTask(widget.task!, updatedTask);
                       } else {
                         final newTask = Task(
                           id: 0,
@@ -125,7 +125,7 @@ class _AddTaskState extends State<AddTask> {
                           tags: [],
                         );
                         
-                        context.read<TaskViewModel>().addTask(newTask);
+                        await context.read<TaskViewModel>().addTask(newTask);
                       }
                       
                       Navigator.pop(context);

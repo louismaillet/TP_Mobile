@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show exit;
 import 'package:td2_mobile/ui/addtask.dart';
 import 'package:td2_mobile/ui/mytheme.dart';
 import 'package:td2_mobile/ui/ecran1.dart';
@@ -14,7 +15,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     // Change default factory on the web
@@ -57,22 +58,25 @@ class MyApp extends StatelessWidget {
           create: (_) {
             SettingViewModel settingviewmodel = SettingViewModel();
             return settingviewmodel;
-          }
+          },
         ),
         ChangeNotifierProvider(
-          create: (_){
+          create: (_) {
             TaskViewModel taskViewModel = TaskViewModel(database);
             return taskViewModel;
-          }
+          },
         ),
       ],
       child: Consumer<SettingViewModel>(
-          builder: (context,SettingViewModel notifier,child) {
-            return MaterialApp(title: 'TD2',
-                theme: context.watch<SettingViewModel>().isDark ? MyTheme.dark() : MyTheme.light(),
-                home: MyHomePage(title: "TD2")
-            );
-          }
+        builder: (context, SettingViewModel notifier, child) {
+          return MaterialApp(
+            title: 'TD2',
+            theme: context.watch<SettingViewModel>().isDark
+                ? MyTheme.dark()
+                : MyTheme.light(),
+            home: MyHomePage(title: "TD2"),
+          );
+        },
       ),
     );
   }
@@ -80,7 +84,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  
+
   const MyHomePage({super.key, required this.title});
 
   @override
@@ -89,38 +93,54 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  
-  final List<Widget> mesPages = [ScreenOne(),ScreenTwo(),ScreenThree(),EcranSettings()];
-  
+
+  final List<Widget> mesPages = [
+    ScreenOne(),
+    ScreenTwo(),
+    ScreenThree(),
+    EcranSettings(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TD2",style: Theme.of(context).appBarTheme.titleTextStyle),
+        title: Text("TD2", style: Theme.of(context).appBarTheme.titleTextStyle),
       ),
-      floatingActionButton: _currentIndex==0?FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => AddTask(),
-          )
-          );
-        },
-        child: const Icon(Icons.add),):const SizedBox.shrink(),
+      floatingActionButton: _currentIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddTask()),
+                );
+              },
+              child: const Icon(Icons.add),
+            )
+          : const SizedBox.shrink(),
       body: mesPages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(icon: Icon(Icons.eleven_mp_sharp), label: 'Search'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-          ],
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+        unselectedItemColor: Theme.of(
+          context,
+        ).bottomNavigationBarTheme.unselectedItemColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.eleven_mp_sharp),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }

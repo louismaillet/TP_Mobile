@@ -17,7 +17,7 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTask(Task task) async {
+  Future<void> addTask(Task task) async {
     await _repository.insertTask(task);
     await _loadTasks();
   }
@@ -30,7 +30,7 @@ class TaskViewModel extends ChangeNotifier {
     }
   }
 
-  void updateTask(Task oldTask, Task newTask) async {
+  Future<void> updateTask(Task oldTask, Task newTask) async {
     await _repository.updateTask(newTask);
     await _loadTasks();
   }
