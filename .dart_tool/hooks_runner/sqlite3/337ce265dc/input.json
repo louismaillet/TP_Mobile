@@ -1,0 +1,12 @@
+{
+  "assets": {},
+  "config": {
+    "build_asset_types": [],
+    "linking_enabled": false
+  },
+  "out_dir_shared": "/home/iut45/Etudiants/o22406805/TP_Mobile/.dart_tool/hooks_runner/shared/sqlite3/build/",
+  "out_file": "/home/iut45/Etudiants/o22406805/TP_Mobile/.dart_tool/hooks_runner/sqlite3/337ce265dc/output.json",
+  "package_name": "sqlite3",
+  "package_root": "/home/iut45/Etudiants/o22406805/.pub-cache/hosted/pub.dev/sqlite3-3.2.0/",
+  "user_defines": {}
+}

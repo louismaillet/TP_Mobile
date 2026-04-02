@@ -1,16 +1,52 @@
-# td2_mobile
+# Setup - TP Mobile
 
-A new Flutter project.
+## Lancer l'Application
 
-## Getting Started
+```bash
+flutter clean
+flutter pub get
+flutter run -d chrome --web-port 5000
+```
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## SQL à lancer dans Supabase
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Copier-coller dans l'éditeur SQL de Supabase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```sql
+CREATE TABLE task (
+  id INT PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT,
+  nbhours INTEGER DEFAULT 0,
+  difficulty INTEGER DEFAULT 1,
+  tags TEXT,
+  connecterSupabase INTEGER DEFAULT 0
+);
+```
+
+---
+
+## Configuration
+
+Modifier `lib/main.dart` avec vos clés Supabase :
+
+```dart
+await Supabase.initialize(
+  url: "VOTRE_URL",
+  anonKey: "VOTRE_CLE",
+);
+```
+
+# Ce que j'ai fait : 
+
+- Création d'une table `task` dans Supabase avec les champs nécessaires.
+- Mise en place de l'initialisation de Supabase dans le code Flutter.
+- Création d'une task avec le choix de l'ajouter a supabase ou non.
+- sauvergarde de la task dans une liste localement.
+
+
+
+
+

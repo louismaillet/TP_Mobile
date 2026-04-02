@@ -41,14 +41,12 @@ void main() async {
   runApp(MyApp(database));
 }
 
-// It's handy to then extract the Supabase client in a variable for later uses
 final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   final Database database;
   const MyApp(this.database, {super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
